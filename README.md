@@ -1,5 +1,5 @@
 # clinical-rnd-process-automation-assistant
-Clinical R&amp;D Process Automation Assistant | 临床研发流程自动化助手 AI agent for automatic meeting minutes, document comparison and task management in clinical research | 面向临床研究领域，实现会议纪要自动生成、文档比对与任
+Clinical R&amp;D Process Automation Assistant | 临床研发流程自动化助手 AI agent for automatic meeting minutes, document comparison and task management in clinical research | 面向临床研究领域，实现会议纪要自动生成、文档比对与任务管理的AI智能体
 # 🏥 临床研发流程自动化助手
 
 > **Clinical R&D Process Automation Assistant**  
@@ -206,10 +206,10 @@ python -m pytest tests/ --cov=app
 
 ## 👨‍💻 开发团队
 
-BeiGene AI Engineering Intern Project
+AI 临床研发自动化开源演示项目
 
 ---
 
 ## 📄 许可证
 
-本项目为 BeiGene 面试项目，仅供演示和学习使用。
+本项目为 AI 临床研发自动化开源演示项目，仅供个人学习、技术演示使用。
