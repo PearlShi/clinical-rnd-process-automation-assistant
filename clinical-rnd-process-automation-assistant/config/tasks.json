@@ -1,0 +1,49 @@
+{
+  "description": "临床研发流程自动化助手 - 任务规则配置文件",
+  "version": "1.0.0",
+  "task_rules": {
+    "meeting_minutes": {
+      "display_name": "会议纪要生成",
+      "enabled": true,
+      "input_types": ["text", "audio"],
+      "output_formats": ["markdown", "docx"],
+      "max_file_size_mb": 50,
+      "supported_languages": ["zh-CN", "en"],
+      "default_language": "zh-CN",
+      "auto_route": true
+    },
+    "doc_compare": {
+      "display_name": "临床文档版本对比",
+      "enabled": true,
+      "input_types": ["document"],
+      "output_formats": ["html", "markdown"],
+      "supported_doc_types": ["protocol", "icf"],
+      "max_file_size_mb": 30,
+      "auto_route": true,
+      "comparison_engine": "difflib"
+    },
+    "task_management": {
+      "display_name": "任务管理与提醒",
+      "enabled": true,
+      "input_types": ["text", "email"],
+      "auto_route": true,
+      "reminder_interval_minutes": 60,
+      "auto_archive_days": 30,
+      "storage_path": "data/task_storage.json"
+    }
+  },
+  "plugin_task_rules": {
+    "data_validation": {
+      "display_name": "数据校验",
+      "enabled": false,
+      "rule_file": "config/validation_rules.json",
+      "strict_mode": false
+    },
+    "compliance_report": {
+      "display_name": "合规报告生成",
+      "enabled": false,
+      "template_path": "",
+      "output_dir": "data/reports"
+    }
+  }
+}

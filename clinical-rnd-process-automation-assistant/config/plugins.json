@@ -1,0 +1,33 @@
+{
+  "description": "临床研发流程自动化助手 - 插件配置文件",
+  "plugin_dirs": [
+    "config/plugins",
+    "custom_plugins"
+  ],
+  "enabled_plugins": [],
+  "plugin_settings": {
+    "合规报告生成器": {
+      "output_format": "docx",
+      "template_path": "templates/compliance_template.docx",
+      "auto_approve": false
+    },
+    "数据校验器": {
+      "validation_rules": "config/validation_rules.json",
+      "strict_mode": true
+    }
+  },
+  "plugin_examples": {
+    "数据校验脚本": {
+      "input_types": ["csv", "xlsx", "json"],
+      "description": "自动校验临床数据的完整性和一致性"
+    },
+    "合规报告模板生成": {
+      "output_types": ["docx", "pdf"],
+      "description": "根据模板自动生成合规报告"
+    },
+    "批量文件处理": {
+      "input_types": ["docx", "pdf", "txt"],
+      "description": "批量处理临床文档的格式转换和标准化"
+    }
+  }
+}

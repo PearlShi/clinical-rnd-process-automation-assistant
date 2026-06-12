@@ -1,0 +1,101 @@
+# ============================================================
+#  docker-compose.yml - 临床研发流程自动化助手
+#  一键部署配置
+# ============================================================
+#
+# 启动方式:
+#   docker-compose up -d
+#
+# 访问地址:
+#   Web UI:  http://localhost:8501
+#   API:     http://localhost:8000
+#
+# 停止服务:
+#   docker-compose down
+#
+# ============================================================
+
+version: '3.8'
+
+services:
+  # ========================================
+  #  Streamlit Web UI 服务
+  # ========================================
+  web-ui:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: clinical-assistant-ui
+    image: clinical-rd-assistant:latest
+    ports:
+      - "8501:8501"
+    volumes:
+      # 持久化存储
+      - task_data:/app/data/task_storage
+      - upload_data:/app/data/uploads
+      - logs:/app/logs
+      # 配置文件映射（便于运行时修改）
+      - ../config:/app/config
+    environment:
+      - PYTHONPATH=/app
+      - APP_DEBUG=false
+      - LLM_PROVIDER=mock
+      - TZ=Asia/Shanghai
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8501')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - clinical-net
+
+  # ========================================
+  #  FastAPI 后端服务（可选）
+  # ========================================
+  api-server:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: clinical-assistant-api
+    image: clinical-rd-assistant:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - task_data:/app/data/task_storage
+      - upload_data:/app/data/uploads
+      - logs:/app/logs
+      - ../config:/app/config
+    environment:
+      - PYTHONPATH=/app
+      - APP_DEBUG=false
+      - LLM_PROVIDER=mock
+      - TZ=Asia/Shanghai
+    command: >
+      sh -c "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    restart: unless-stopped
+    profiles:
+      - api
+      - full
+    networks:
+      - clinical-net
+
+# ========================================
+#  数据卷
+# ========================================
+volumes:
+  task_data:
+    name: clinical-assistant-task-data
+  upload_data:
+    name: clinical-assistant-upload-data
+  logs:
+    name: clinical-assistant-logs
+
+# ========================================
+#  网络
+# ========================================
+networks:
+  clinical-net:
+    name: clinical-assistant-network
+    driver: bridge
